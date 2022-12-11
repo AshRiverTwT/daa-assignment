@@ -1,39 +1,32 @@
-from bisect import bisect_right as upper_bound
- 
-MAX = 100;
- 
-# Function to find median in the matrix
-def binaryMedian(m, r, d):
-    mi = m[0][0]
-    mx = 0
-    for i in range(r):
-        if m[i][0] < mi:
-            mi = m[i][0]
-        if m[i][d-1] > mx :
-            mx =  m[i][d-1]
-     
-    desired = (r * d + 1) // 2
-     
-    while (mi < mx):
-        mid = mi + (mx - mi) // 2
-        place = [0];
-        for i in range(r):
-             j = upper_bound(m[i], mid)
-             place[0] = place[0] + j
-        if place[0] < desired:
-            mi = mid + 1
-        else:
-            mx = mid
-    print (mi)
-    return   
-     
-r = int(input())
-d = int(input())
-m = []
-for i in range(r):          
-    a =[]
-    for j in range(d):      
-         a.append(int(input()))
-    m.append(a)
-    
-binaryMedian(m, r, d)
+#include <bits/stdc++.h>
+using namespace std;
+int median(int a[][100],int r,int c)
+{
+        int n=r*c;
+        int arr[n],index=0,i,j;
+        for(i=0;i<r;i++)
+        {
+            for(j=0;j<c;j++)
+            {
+                arr[index]=a[i][j];
+                index++;
+            }
+        }
+        sort(arr,arr+n);
+        int mid=n/2;
+        if(n%2==1)
+            return arr[n/2];
+        else
+            return arr[n/2]+arr[n/2+1];
+}
+int main()
+{
+  int r,c,i,j;
+  cin>>r>>c;
+  int a[100][100];
+  for(i=0;i<r;i++)
+    for(j=0;j<c;j++)
+        cin>>a[i][j];
+  cout<<median(a,r,c);
+  return 0;
+}
